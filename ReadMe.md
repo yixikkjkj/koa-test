@@ -8,9 +8,21 @@
 - [ ] form
   - [ ] normal form
   - [ ] file upload
-- [ ] router and nested router
+- [x] router and nested router
 - [ ] database orm and model
 - [ ] app config and env variable
 - [ ] render template backend
 - [ ] typescript compile and develop
 - [ ] docker and docker-compose deploy
+
+## 文件引用
+
+使用 tsconfig.json 中的 paths 定义了 ~ 为 src，在编译时增加了 tsc-alias 将 path 别名转换为相对路径
+
+```json
+{
+  "paths": {
+    "~/*": ["./src/*"],
+  },
+}
+```

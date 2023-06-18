@@ -1,13 +1,9 @@
 import KoaRouter from 'koa-router';
-import * as helloAction from '~/actions/hello';
+import { router as helloRouter } from "./hello";
 
-const router = new KoaRouter();
-
-router.get("/", async (ctx, next) => {
-  ctx.body = { msg: await helloAction.helloWorld() };
-  await next();
-});
+const router = new KoaRouter({prefix: "/api"});
+router.use(helloRouter.routes());
 
 export {
   router,
-}
+};
