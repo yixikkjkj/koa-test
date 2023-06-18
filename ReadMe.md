@@ -10,7 +10,7 @@
   - [ ] file upload
 - [x] router and nested router
 - [ ] database orm and model
-- [ ] app config and env variable
+- [x] app config and env variable
 - [ ] render template backend
 - [ ] typescript compile and develop
 - [ ] docker and docker-compose deploy

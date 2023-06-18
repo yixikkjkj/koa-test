@@ -1,14 +1,32 @@
-import Koa from 'koa';
-import { router } from "./routes";
+import { startWebServer, webServer } from "./server";
 
-function createApp() {
-  const app = new Koa();
-  app.use(router.routes()).use(router.allowedMethods());
-  return app;
+function stopWebServer() {
+  webServer && webServer.close();
 }
 
-const app = createApp();
+async function main() {
+  await startWebServer();
 
-app.listen(13000, () => {
-  console.log("Koa started");
-});
+  process.on("SIGINT", stopWebServer);
+  process.on("SIGTERM", stopWebServer);
+  process.on("SIGHUP", stopWebServer);
+
+  await new Promise((resolve, reject) => {
+    webServer && webServer.on("close", resolve);
+    webServer && webServer.on("error", reject);
+  });
+
+  process.removeListener("SIGINT", stopWebServer);
+  process.removeListener("SIGTERM", stopWebServer);
+  process.removeListener("SIGHUP", stopWebServer);
+}
+
+main()
+  .then(() => {
+    console.log("Bye.");
+  })
+  .catch((err) => {
+    setImmediate(() => {
+      throw err;
+    });
+  });
